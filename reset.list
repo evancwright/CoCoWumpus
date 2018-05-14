@@ -1,0 +1,18 @@
+                      (        reset.asm):00001         ;reset.asm
+                      (        reset.asm):00002         ;tests the reset vector
+     A1CB             (        reset.asm):00003         KBSCAN  EQU $A1CB
+     00BF             (        reset.asm):00004         RED_SQUARE EQU 191
+     00AF             (        reset.asm):00005         BLUE_SQUARE EQU 175
+                      (        reset.asm):00006         
+                      (        reset.asm):00007                 org $E00
+0E00                  (        reset.asm):00008         start
+0E00 86BF             (        reset.asm):00009                 lda #RED_SQUARE
+0E02 B70400           (        reset.asm):00010                 sta $400
+0E05 86AF             (        reset.asm):00011                 lda #BLUE_SQUARE
+0E07 B70420           (        reset.asm):00012                 sta $420
+0E0A BDA1CB           (        reset.asm):00013         @sp     JSR KBSCAN  ; PUTS KEYCODE INTO A - 0 = NO KEY
+0E0D 8100             (        reset.asm):00014                 CMPA #0
+0E0F 27F9             (        reset.asm):00015                 BEQ @sp
+                      (        reset.asm):00016                 
+                      (        reset.asm):00017                 
+                      (        reset.asm):00018                 end start

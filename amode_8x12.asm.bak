@@ -1,0 +1,187 @@
+;cocowumpus
+;SAM VIDEO PAGE PAGE
+SAM_V0_CLR EQU $FFC0
+SAM_V0_SET EQU $FFC1
+SAM_V1_CLR EQU $FFC2
+SAM_V1_SET EQU $FFC3
+SAM_V2_CLR EQU $FFC4
+SAM_V2_SET EQU $FFC5
+
+;SAM PAGE SELECT
+;ffc6/ffc7   SAM Display Offset bit F0 
+;ffc8/ffc9   SAM Display Offset bit F1 
+;ffca/ffcb   SAM Display Offset bit F2 
+;ffcc/ffcd   SAM Display Offset bit F3 
+;ffce/ffcf   SAM Display Offset bit F4 
+;ffd0/ffc1   SAM Display Offset bit F5 
+;ffd2/ffc3   SAM Display Offset bit F6 
+SAM_PG_F0_CLR EQU $FFC6
+SAM_PG_F0_SET EQU $FFC7
+SAM_PG_F1_CLR EQU $FFC8
+SAM_PG_F1_SET EQU $FFC9
+SAM_PG_F2_CLR EQU $FFCA
+SAM_PG_F2_SET EQU $FFCB
+SAM_PG_F3_CLR EQU $FFCC
+SAM_PG_F3_SET EQU $FFCD
+SAM_PG_F4_CLR EQU $FFCE
+SAM_PG_F4_SET EQU $FFCF
+SAM_PG_F5_CLR EQU $FFD0
+SAM_PG_F5_SET EQU $FFD1
+SAM_PG_F6_CLR EQU $FFD2
+SAM_PG_F6_SET EQU $FFD3
+
+VDG_CONTROL EQU $FF22
+
+GM_0 EQU  16
+GM_1 EQU  32
+GM_2 EQU  64
+COLOR_BIT EQU 8
+WIDTH EQU 16
+TILE_BYTE_WIDTH EQU 4
+VRAM EQU $E00
+	;ORG 0xE00 ; START CODE HERE  (WHEN IT'S A BIN DISK FILE )
+	;ORG 0x1A00 ; START CODE HERE  (WHEN IT'S A BIN DISK FILE )
+	ORG 0x2600
+START
+
+main
+	jsr setup_sam
+	lda color
+	jsr cls
+@lp	
+	jsr draw_board
+	bra @lp
+	rts
+	
+;clears screen with color in A	
+cls
+	lda #5 ; 0,1
+	ldy #0
+@lp	sta VRAM,y
+;	inca
+	leay 1,y
+	cmpy #6144 ; end of VRAM
+	bne @lp	
+	rts
+	
+;pmode 1
+setup_sam
+	; Full graphic 3-C  11001100 128x96x4   $C00(3072	
+	lda #1 
+	;set SAM mode
+	sta SAM_V0_CLR
+	sta SAM_V1_SET
+	sta SAM_V2_SET 
+	;set page page (7)
+	sta SAM_PG_F0_SET
+	sta SAM_PG_F1_SET
+	sta SAM_PG_F2_SET
+	sta SAM_PG_F3_CLR
+	sta SAM_PG_F4_CLR
+	sta SAM_PG_F5_CLR
+	sta SAM_PG_F6_CLR
+	lda #$FC
+	sta VDG_CONTROL 
+	rts
+
+;computes a * 512 + b * 4
+;result in y 	
+compute_tile_coord
+	rts
+
+draw_board
+	lda #0
+	ldb #0
+	ldx #sprite_data
+	ldy #VRAM
+@lp
+	jsr draw_tile
+	leay 4,y ; move 4 bytes over to next tile
+	inca 
+	cmpa #96 ; 96 tiles on screen
+    beq @x
+	incb
+	cmpb #8
+	bne @lp
+	leay 480,y ; drop down one line of tiles
+	ldb #0
+	bra @lp
+@x	rts
+	
+	
+;copies a 16x16 tile to the 
+;cordinate in a,b
+;coords must be multiples of 4
+;x contains the sprite addr
+;y contains dest addr
+;no screen bounds checking
+draw_tile
+	pshs d,x,y
+ 	lda #0
+@ol	
+	ldb #0  ; inner loop counter
+@il	pshs a
+	lda ,x+
+	sta ,y
+	puls a
+	leay 1,y
+	incb
+	cmpb #4 ; sprites are 4 bytes wide
+	bne @il 
+	leay 28,y 	;drop down a line
+	inca	
+	cmpa #16 ;sprites are 16 rows tall
+	bne @ol
+	puls y,x,d
+	rts
+
+;x contains the mask addr
+;y is used as the dest addr
+mask_tile
+	pshs d,x,y
+	
+ 	puls y,x,d
+	rts
+	
+sprite_data
+	.db 85,95,213,85
+	.db 85,95,213,85
+	.db 85,95,213,85
+	.db 85,255,245,85
+	.db 87,252,255,85
+	.db 87,207,63,85
+	.db 95,0,43,213
+	.db 255,202,43,255
+	.db 255,34,175,255
+	.db 255,170,191,255
+	.db 95,170,191,213
+	.db 87,255,255,85
+	.db 85,95,213,85
+	.db 85,95,213,85
+	.db 85,95,213,85
+	.db 85,95,213,85
+
+sprite_player_lower_tunnel
+	.db 85,95,213,85
+	.db 85,95,213,85
+	.db 85,95,213,85
+	.db 85,255,245,85
+	.db 87,255,253,85
+	.db 87,255,245,85
+	.db 95,255,213,85
+	.db 255,255,124,255
+	.db 255,253,207,63
+	.db 255,247,0,63
+	.db 95,215,207,21
+	.db 87,95,205,85
+	.db 85,95,49,85
+	.db 85,95,245,85
+	.db 85,95,213,85
+	.db 85,95,213,85	
+
+	
+color .db $E4 ; 11100100	
+	.strz "EVAN WRIGHT" 
+	END START
+
+	; Full graphic 3-C  11001100 128x96x4   $C00(3072

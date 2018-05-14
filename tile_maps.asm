@@ -1,0 +1,43 @@
+;tile_maps
+	
+pit_tile_map
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,white_tile,white_tile,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,white_tile,white_tile,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,white_tile,white_tile,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,white_tile,white_tile,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,white_tile,white_tile,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,white_tile,white_tile,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,white_tile,white_tile,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_bottom,sprite_pit_bottom,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	
+tunnel_tile_map
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw white_tile,white_tile,white_tile,white_tile,white_tile,white_tile,white_tile,white_tile	
+	.dw white_tile,white_tile,white_tile,white_tile,white_tile,white_tile,white_tile,white_tile	
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	
+win_tile_map
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw white_tile,white_tile,sprite_got,sprite_it,sprite_excl,white_tile,white_tile,white_tile	
+	.dw white_tile,white_tile,white_tile,white_tile,white_tile,white_tile,sprite_wumpus_dead_left,sprite_wumpus_right	
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+
+	
+	
+choose_skill_tile_map
+	.dw sprite_tooth_upper,sprite_tooth_upper,sprite_tooth_upper,sprite_tooth_upper,sprite_tooth_upper,sprite_tooth_upper,sprite_tooth_upper,sprite_tooth_upper
+	.dw sprite_orange,sprite_orange,sprite_orange,sprite_orange,sprite_orange,sprite_orange,sprite_orange,sprite_orange
+	.dw sprite_orange,sprite_orange,sprite_cho,sprite_ose,sprite_a_sk,sprite_ill,sprite_orange,sprite_orange
+	.dw sprite_orange,sprite_orange,white_tile,skill_level_easy,white_tile,white_tile,sprite_orange,sprite_orange
+	.dw sprite_orange,sprite_orange,white_tile,skill_level_twis,skill_level_ty,white_tile,sprite_orange,sprite_orange
+	.dw sprite_orange,sprite_orange,white_tile,skill_level_very,skill_level_twis,skill_level_ty,sprite_orange,sprite_orange
+	.dw sprite_orange,sprite_orange,sprite_orange,sprite_orange,sprite_orange,sprite_orange,sprite_orange,sprite_orange
+	.dw sprite_tooth_lower,sprite_tooth_lower,sprite_tooth_lower,sprite_tooth_lower,sprite_tooth_lower,sprite_tooth_lower,sprite_tooth_lower,sprite_tooth_lower

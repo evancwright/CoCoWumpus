@@ -1,0 +1,54 @@
+                      (       wumpus.asm):00001         ;cocowumpus
+     FFC0             (       wumpus.asm):00002         SAM_V0_CLR EQU $FFC0
+     FFC1             (       wumpus.asm):00003         SAM_V0_SET EQU $FFC1
+     FFC2             (       wumpus.asm):00004         SAM_V1_CLR EQU $FFC2
+     FFC3             (       wumpus.asm):00005         SAM_V1_SET EQU $FFC3
+     FFC4             (       wumpus.asm):00006         SAM_V2_CLR EQU $FFC4
+     FFC5             (       wumpus.asm):00007         SAM_V2_SET EQU $FFC5
+                      (       wumpus.asm):00008         
+     FFC0             (       wumpus.asm):00009         VDG_V0_CLR EQU $FFC0
+     FFC1             (       wumpus.asm):00010         VDG_V0_SET EQU $FFC1
+     FFC2             (       wumpus.asm):00011         VDG_V1_CLR EQU $FFC2
+     FFC3             (       wumpus.asm):00012         VDG_V1_SET EQU $FFC3
+     FFC4             (       wumpus.asm):00013         VDG_V2_CLR EQU $FFC4
+     FFC5             (       wumpus.asm):00014         VDG_V2_SET EQU $FFC5
+     FF22             (       wumpus.asm):00015         VDG_CONTROL EQU $FF22
+                      (       wumpus.asm):00016         
+                      (       wumpus.asm):00017                 ORG 0x0E00 ; START CODE HERE  (WHEN IT'S A BIN DISK FILE )
+                      (       wumpus.asm):00018         
+0E00                  (       wumpus.asm):00019         start
+                      (       wumpus.asm):00020         
+0E00                  (       wumpus.asm):00021         main
+0E00 BD0E1B           (       wumpus.asm):00022                 jsr setup_sam
+0E03 108E0000         (       wumpus.asm):00023                 ldy #0
+0E07 B60E38           (       wumpus.asm):00024                 lda color
+0E0A                  (       wumpus.asm):00025         @lp 
+0E0A A7A90400         (       wumpus.asm):00026                 sta 400h,y
+0E0E 3121             (       wumpus.asm):00027                 leay 1,y
+0E10 108C1800         (       wumpus.asm):00028                 cmpy #6144 ; end of VRAM
+0E14 2702             (       wumpus.asm):00029                 beq @x
+0E16 20F2             (       wumpus.asm):00030                 bra @lp
+0E18 20FE             (       wumpus.asm):00031         @x  bra @x ; hang
+0E1A 39               (       wumpus.asm):00032                 rts
+                      (       wumpus.asm):00033                 
+                      (       wumpus.asm):00034         ;pmode 1
+0E1B                  (       wumpus.asm):00035         setup_sam
+                      (       wumpus.asm):00036                 ; Full graphic 3-C  11001100 128x96x4   $C00(3072       
+0E1B 8601             (       wumpus.asm):00037                 lda #1 
+                      (       wumpus.asm):00038                 ;set video page
+0E1D B7FFC0           (       wumpus.asm):00039                 sta SAM_V0_CLR
+0E20 B7FFC2           (       wumpus.asm):00040                 sta SAM_V1_CLR
+0E23 B7FFC5           (       wumpus.asm):00041                 sta SAM_V2_SET 
+                      (       wumpus.asm):00042                 ;set pmode
+0E26 B7FFC1           (       wumpus.asm):00043                 sta VDG_V0_SET
+0E29 B7FFC2           (       wumpus.asm):00044                 sta VDG_V1_CLR
+0E2C B7FFC5           (       wumpus.asm):00045                 sta VDG_V2_SET
+                      (       wumpus.asm):00046                 ;set bit 7 of VDG control to 1 for graphics
+0E2F B6FF22           (       wumpus.asm):00047                 lda VDG_CONTROL
+0E32 8A7F             (       wumpus.asm):00048                 ORA #7Fh
+0E34 B7FF22           (       wumpus.asm):00049                 sta VDG_CONTROL ;
+0E37 39               (       wumpus.asm):00050                 rts
+                      (       wumpus.asm):00051         
+0E38 E4               (       wumpus.asm):00052         color .db $E4 ; 11100100        
+                      (       wumpus.asm):00053                  
+                      (       wumpus.asm):00054                 end start
