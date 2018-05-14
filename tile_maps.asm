@@ -24,7 +24,7 @@ win_tile_map
 	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
 	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
 	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
-	.dw white_tile,white_tile,sprite_got,sprite_it,sprite_excl,white_tile,white_tile,white_tile	
+	.dw white_tile,white_tile,white_tile,white_tile,white_tile,white_tile,white_tile,white_tile	
 	.dw white_tile,white_tile,white_tile,white_tile,white_tile,white_tile,sprite_wumpus_dead_left,sprite_wumpus_right	
 	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
 	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall

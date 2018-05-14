@@ -1291,6 +1291,17 @@ animate_bat
 animate_win
 	ldx #win_tile_map
 	jsr draw_tile_map
+	
+	;draw the victory sprite
+	lda #9 ; width
+	pshu a
+	lda #20 ; height
+	pshu a
+	lda #12  ; x,y
+	ldb #80 ; 
+	ldy #sprite_victory
+	jsr draw_sprite
+	
 	ldx #win_music
 	jsr play_song
 	jsr any_key
