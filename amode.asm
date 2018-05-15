@@ -359,7 +359,7 @@ draw_help_screen
 	lda #8 ; height
 	pshu a
 	lda #4  ; x,y
-	ldb #90 ; 
+	ldb #100 ; 
 	ldy #use_aswd
 	jsr draw_sprite
 	;draw 'to move'
@@ -367,8 +367,8 @@ draw_help_screen
 	pshu a
 	lda #7 ; height
 	pshu a
-	lda #16  ; x,y
-	ldb #90 ; 
+	lda #14  ; x,y
+	ldb #100 ; 
 	ldy #to_move
 	jsr draw_sprite	
 	;draw 'to fire'
@@ -377,7 +377,7 @@ draw_help_screen
 	lda #7 ; height
 	pshu a
 	lda #4  ; x,y
-	ldb #100 ; 
+	ldb #120 ; 
 	ldy #to_fire
 	jsr draw_sprite		
 	;draw 'to fire'
@@ -386,8 +386,26 @@ draw_help_screen
 	lda #9 ; height
 	pshu a
 	lda #16  ; x,y
-	ldb #100 ; 
+	ldb #120 ; 
 	ldy #then_aswd
+	jsr draw_sprite
+	;draw pit help
+	lda #16 ; width
+	pshu a
+	lda #18 ; height
+	pshu a
+	lda #4  ; x,y
+	ldb #70 ; 	
+	ldy #pit_help
+	jsr draw_sprite
+	;draw blood legend 
+	lda #16 ; width
+	pshu a
+	lda #18 ; height
+	pshu a
+	lda #4  ; x,y
+	ldb #40 ; 	
+	ldy #within_2	
 	jsr draw_sprite
 	; draw press any key
 ;	ldy #(VRAM+(768*5)+13)
@@ -398,7 +416,7 @@ draw_help_screen
 	pshu a
 	lda #6 ; height
 	pshu a
-	lda #10  ; x,y
+	lda #4  ; x,y
 	ldb #120 ; 
 	ldy #help_sprite
 	jsr draw_sprite	
