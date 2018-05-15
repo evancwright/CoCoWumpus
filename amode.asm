@@ -254,20 +254,7 @@ draw_title
 
 ;draws the screen with the tallies
 draw_score_screen
-	lda #BLUE_FILL
-	jsr cls
-	lda #WHITE_FILL
-	;white rect
-	pshu a
-	lda #172 ; height
-	pshu a
-	lda #28 ; width
-	pshu a
-	lda #8 ;y 
-	pshu a
-	lda #2  ; x
-	pshu a
-	jsr fill_rect
+	jsr blue_border
 	;draw pit
 	lda #4 ; width
 	pshu a
@@ -344,16 +331,96 @@ draw_score_screen
 	jsr draw_sprite
 @k
 	jsr KBSCAN
-	cmpa #'S'
+	cmpa #'H'
 	bne @s
-	jsr skill_level_screen
+	jsr draw_help_screen
 	bra @x
-@s  cmpa #'P'
+@s	cmpa #'S'
+	bne @s1
+	jsr skill_level_screen
+	bra @x	
+@s1 cmpa #'P'
 	beq @x
     cmpa #' '
 	beq @x
 	bra @k
 @x	rts
+
+draw_help_screen
+	jsr blue_border
+	;draw aswd
+		; draw press any key
+;	ldy #(VRAM+(768*5)+13)
+;	ldx #press_a_key
+;	jsr draw_tile
+	;h = help
+	lda #12 ; width
+	pshu a
+	lda #8 ; height
+	pshu a
+	lda #4  ; x,y
+	ldb #90 ; 
+	ldy #use_aswd
+	jsr draw_sprite
+	;draw 'to move'
+	lda #7 ; width
+	pshu a
+	lda #7 ; height
+	pshu a
+	lda #16  ; x,y
+	ldb #90 ; 
+	ldy #to_move
+	jsr draw_sprite	
+	;draw 'to fire'
+	lda #12 ; width
+	pshu a
+	lda #7 ; height
+	pshu a
+	lda #4  ; x,y
+	ldb #100 ; 
+	ldy #to_fire
+	jsr draw_sprite		
+	;draw 'to fire'
+	lda #12 ; width
+	pshu a
+	lda #9 ; height
+	pshu a
+	lda #16  ; x,y
+	ldb #100 ; 
+	ldy #then_aswd
+	jsr draw_sprite
+	; draw press any key
+;	ldy #(VRAM+(768*5)+13)
+;	ldx #press_a_key
+;	jsr draw_tile
+	;h = help
+	lda #6 ; width
+	pshu a
+	lda #6 ; height
+	pshu a
+	lda #10  ; x,y
+	ldb #120 ; 
+	ldy #help_sprite
+	jsr draw_sprite	
+	jsr any_key
+	rts
+
+blue_border
+	lda #BLUE_FILL
+	jsr cls
+	lda #WHITE_FILL
+	;white rect
+	pshu a
+	lda #172 ; height
+	pshu a
+	lda #28 ; width
+	pshu a
+	lda #8 ;y 
+	pshu a
+	lda #2  ; x
+	pshu a
+	jsr fill_rect
+	rts
 	
 draw_board
 	lda #0
