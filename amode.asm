@@ -244,8 +244,8 @@ draw_title
 	leay 4,y
 	ldx #title_s	
 	jsr draw_tile	
-	ldx #intro_music
-	jsr play_song
+	;ldx #intro_music
+	;jsr play_song
 	; draw press any key
 	ldy #(VRAM+(768*5)+14)
 	ldx #press_a_key
@@ -253,7 +253,7 @@ draw_title
 	jsr any_key
 	rts
 
-;draws the tallies
+;draws the screen with the tallies
 draw_score_screen
 	lda #BLUE_FILL
 	jsr cls
@@ -312,9 +312,37 @@ draw_score_screen
 	ldx #wump_score
 	jsr draw_score
 	; draw press any key
-	ldy #(VRAM+(768*5)+13)
-	ldx #press_a_key
-	jsr draw_tile
+;	ldy #(VRAM+(768*5)+13)
+;	ldx #press_a_key
+;	jsr draw_tile
+	;h = help
+	lda #6 ; width
+	pshu a
+	lda #6 ; height
+	pshu a
+	lda #10  ; x,y
+	ldb #120 ; 
+	ldy #help_sprite
+	jsr draw_sprite
+
+	;draw the s=skill level
+	lda #13 ; width
+	pshu a
+	lda #6 ; height
+	pshu a
+	lda #10  ; x,y
+	ldb #130 ; 
+	ldy #change_skill
+	jsr draw_sprite
+	;draw the p=play again
+	lda #15 ; width
+	pshu a
+	lda #6 ; height
+	pshu a
+	lda #10  ; x,y
+	ldb #140 ; 
+	ldy #play_again
+	jsr draw_sprite
 	jsr any_key
 	rts
 	
