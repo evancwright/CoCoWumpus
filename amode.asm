@@ -111,13 +111,13 @@ main
 	lda #BLACK_FILL
 	jsr cls
 	
-	;save stacks
+	;save stacks in case of warm restart
 	sts sstack_save
 	stu ustack_save
 
 reset	
-	nop ; BASIC LOOKS FOR THIS
-	;restore stacks
+	nop ; BASIC LOOKS FOR A NOP ON WARM RESTART!!!!!
+	;restore stacks (in case of warm restart)
 	lds sstack_save
 	ldu ustack_save
 	
@@ -127,7 +127,7 @@ reset
 	jsr draw_title
 	jsr animate_bat
 	jsr animate_fall
-	jsr get_skill_level
+	jsr skill_level_screen
 	jsr reset_game
 	lda #BLACK_FILL
 	jsr cls
@@ -149,8 +149,7 @@ reset
 	beq @s
 	bra @k
 @s ;put player in 'shooting state'
-   lda #1
-   sta shooting
+   com shooting ; toggle shooting flag
    bra @x
 @m	
 	jsr key_to_offset
@@ -343,8 +342,18 @@ draw_score_screen
 	ldb #140 ; 
 	ldy #play_again
 	jsr draw_sprite
-	jsr any_key
-	rts
+@k
+	jsr KBSCAN
+	cmpa #'S'
+	bne @s
+	jsr skill_level_screen
+	bra @x
+@s  cmpa #'P'
+	beq @x
+    cmpa #' '
+	beq @x
+	bra @k
+@x	rts
 	
 draw_board
 	lda #0
@@ -1335,7 +1344,7 @@ animate_win
 	jsr any_key
 	rts
 
-get_skill_level
+skill_level_screen
 	ldx #choose_skill_tile_map
 	jsr draw_tile_map
 	jsr draw_selected_skill
