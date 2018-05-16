@@ -1633,26 +1633,38 @@ reset_game
 make_tunnels
 	jsr make_tunnel_1
 	jsr make_tunnel_1
+	jsr make_tunnel_1
 	jsr make_tunnel_2
-    jsr make_tunnel_2
+    jsr make_tunnel_2  //5
 	lda skill_level
-	cmpa #EASY
+	cmpa #EASY ; QUIT (5 tunnels)
 	beq @x
 	jsr make_tunnel_1
 	jsr make_tunnel_1
 	jsr make_tunnel_2
     jsr make_tunnel_2
 	jsr make_tunnel_1
+	jsr make_tunnel_2
     jsr make_tunnel_2	
+	jsr make_tunnel_1 //8 (13 total)
 	lda skill_level
-	cmpa #MEDIUM
+	cmpa #MEDIUM (15 tunnels)
 	beq @x
+    jsr make_tunnel_2	
+	jsr make_tunnel_1
 	jsr make_tunnel_1
 	jsr make_tunnel_1
 	jsr make_tunnel_2
+    jsr make_tunnel_2
+	jsr make_tunnel_1
     jsr make_tunnel_2	
+	jsr make_tunnel_1
+	;
+	jsr make_tunnel_2	
+	jsr make_tunnel_1
+	jsr make_tunnel_1
+	jsr make_tunnel_1
 	jsr make_tunnel_2
-    jsr make_tunnel_2	
 @x	rts
 	
 ;overwrites the room data with a 'clean' copy
@@ -1853,7 +1865,7 @@ rooms
 	.db 5,7,53,5,60,62,0,0 ; u,d,l,r,flags 61
 	.db 6,7,54,6,61,63,0,0 ; u,d,l,r,flags 62
 	.db 7,7,55,7,62,56,0,0 ; u,d,l,r,flags 63
-;extra (for tunnels)
+;extra (30 for tunnels)
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
@@ -1863,14 +1875,27 @@ rooms
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64	
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64  //10
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64	
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64	
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64	//20
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64 //24	
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64	
-
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
 initial_room_cfg
 	.db 0,0,56,8,7,1,0,0 ; x,y,u,d,l,r,flags 0
 	.db 1,0,57,9,0,2,0,0 ; x,y,u,d,l,r,flags 1
@@ -1943,7 +1968,7 @@ initial_room_cfg
 	.db 5,7,53,5,60,62,0,0 ; u,d,l,r,flags 61
 	.db 6,7,54,6,61,63,0,0 ; u,d,l,r,flags 62
 	.db 7,7,55,7,62,56,0,0 ; u,d,l,r,flags 63
-	
+	;30 extra rooms (for tunnels)
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
@@ -1960,7 +1985,20 @@ initial_room_cfg
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
 	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64	
-
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64	
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64	
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64	
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64	
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
+	.db 0,0,0,0,0,0,0,0 ; u,d,l,r,flags 64
 end_cfg_data
 	
 	
