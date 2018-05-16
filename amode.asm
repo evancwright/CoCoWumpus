@@ -407,6 +407,25 @@ draw_help_screen
 	ldb #40 ; 	
 	ldy #within_2	
 	jsr draw_sprite
+	;draw blood room
+	lda #4 ; width
+	pshu a
+	lda #24 ; height
+	pshu a
+	lda #20  ; x,y
+	ldb #40 ; 	
+	ldy #sprite_room_slime	
+	jsr draw_sprite
+	;draw draft room
+	;draw blood room
+	lda #4 ; width
+	pshu a
+	lda #24 ; height
+	pshu a
+	lda #20  ; x,y
+	ldb #70 ; 	
+	ldy #sprite_room_draft	
+	jsr draw_sprite	
 	; draw press any key
 ;	ldy #(VRAM+(768*5)+13)
 ;	ldx #press_a_key
