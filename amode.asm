@@ -110,8 +110,9 @@ START
 main
 	lda #BLACK_FILL
 	jsr cls
-	
-	;save stacks in case of warm restart
+	ldy #main
+	sty static_start
+ 	;save stacks in case of warm restart
 	sts sstack_save
 	stu ustack_save
 
@@ -674,7 +675,12 @@ set_player_sprite
 	bne @r
 	ldx #sprite_white
 	bra @x
-@r	ldx #sprite_player
+@r  lda shooting
+	cmpa #0
+	beq @ns
+	ldx #sprite_player_shooting
+	bra @x
+@ns	ldx #sprite_player
 	bra @x	
 @a	cmpa #TUNNEL_1
 	bne @b
@@ -1302,6 +1308,10 @@ animate_fall
 @d	
 	ldx #sprite_splat
 	jsr draw_tile
+	jsr play_static
+	jsr play_static
+	jsr play_static
+	jsr play_static
 	jsr any_key
 	;
 	lda #BLACK_FILL
@@ -1398,10 +1408,15 @@ animate_bat
 	jsr set_draw_offset
 	ldx #sprite_player_bat_1
 	jsr draw_tile
+	jsr play_static
 	jsr waste_time
 	jsr waste_time
+	jsr waste_time
+	jsr play_static
 	ldx #sprite_player_bat_2
 	jsr draw_tile
+	jsr play_static
+	jsr waste_time
 	jsr waste_time
 	jsr waste_time
 @lp
@@ -1415,12 +1430,16 @@ animate_bat
 	jsr set_draw_offset
 	ldx #sprite_player_bat_1
 	jsr draw_tile
+	jsr play_static
+	jsr waste_time
 	jsr waste_time
 	jsr waste_time
 	ldx #sprite_player_bat_2
 	jsr draw_tile
+	jsr play_static
 	jsr waste_time
 	jsr waste_time
+	jsr waste_time		
 	bra @lp
 @d
 	lda #BLACK_FILL
@@ -1950,6 +1969,7 @@ end_cfg_data
 	include tile_maps.asm
 	include calibration.asm
 	include sound.asm
+	include music_data.asm
 	
 player_room .db 9
 move_dir .db 0 ; direction offset for move/shoot
@@ -1978,6 +1998,7 @@ player_score .db 3,0,0,0
 
 sstack_save .dw 0
 ustack_save .dw 0
+static_start .dw 0
 rv_save .dw 0 ; reset vector save
 
 	END START
