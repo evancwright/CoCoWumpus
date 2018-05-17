@@ -349,8 +349,17 @@ draw_score_screen
 
 draw_help_screen
 	jsr blue_border
+	;
+	lda #5 ; width
+	pshu a
+	lda #13 ; height
+	pshu a
+	lda #13  ; x,y
+	ldb #16 ; 
+	ldy #help_title
+	jsr draw_sprite	
 	;draw aswd
-		; draw press any key
+	; draw press any key
 ;	ldy #(VRAM+(768*5)+13)
 ;	ldx #press_a_key
 ;	jsr draw_tile
