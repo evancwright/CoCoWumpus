@@ -358,47 +358,6 @@ draw_help_screen
 	ldb #16 ; 
 	ldy #help_title
 	jsr draw_sprite	
-	;draw aswd
-	; draw press any key
-;	ldy #(VRAM+(768*5)+13)
-;	ldx #press_a_key
-;	jsr draw_tile
-	;h = help
-	lda #12 ; width
-	pshu a
-	lda #8 ; height
-	pshu a
-	lda #4  ; x,y
-	ldb #100 ; 
-	ldy #use_aswd
-	jsr draw_sprite
-	;draw 'to move'
-	lda #7 ; width
-	pshu a
-	lda #7 ; height
-	pshu a
-	lda #14  ; x,y
-	ldb #100 ; 
-	ldy #to_move
-	jsr draw_sprite	
-	;draw 'to fire'
-	lda #12 ; width
-	pshu a
-	lda #7 ; height
-	pshu a
-	lda #4  ; x,y
-	ldb #120 ; 
-	ldy #to_fire
-	jsr draw_sprite		
-	;draw 'to fire'
-	lda #12 ; width
-	pshu a
-	lda #9 ; height
-	pshu a
-	lda #16  ; x,y
-	ldb #120 ; 
-	ldy #then_aswd
-	jsr draw_sprite
 	;draw pit help
 	lda #16 ; width
 	pshu a
@@ -427,7 +386,6 @@ draw_help_screen
 	ldy #sprite_room_slime	
 	jsr draw_sprite
 	;draw draft room
-	;draw blood room
 	lda #4 ; width
 	pshu a
 	lda #24 ; height
@@ -436,19 +394,56 @@ draw_help_screen
 	ldb #70 ; 	
 	ldy #sprite_room_draft	
 	jsr draw_sprite	
+	;draw bat
+	lda #2 ; width
+	pshu a
+	lda #5 ; height
+	pshu a
+	lda #21  ; x,y
+	ldb #105 ; 	
+	ldy #sprite_help_bat	
+	jsr draw_sprite	
+	;use aswd
+	;h = help
+	lda #12 ; width
+	pshu a
+	lda #8 ; height
+	pshu a
+	lda #4  ; x,y
+	ldb #120 ; 
+	ldy #use_aswd
+	jsr draw_sprite
+	;draw 'to move'
+	lda #7 ; width
+	pshu a
+	lda #7 ; height
+	pshu a
+	lda #14  ; x,y
+	ldb #120 ; 
+	ldy #to_move
+	jsr draw_sprite	
+	;draw 'to fire'
+	lda #12 ; width
+	pshu a
+	lda #7 ; height
+	pshu a
+	lda #4  ; x,y
+	ldb #140 ; 
+	ldy #to_fire
+	jsr draw_sprite		
+	;draw 'to fire'
+	lda #12 ; width
+	pshu a
+	lda #9 ; height
+	pshu a
+	lda #16  ; x,y
+	ldb #140 ; 
+	ldy #then_aswd
+	jsr draw_sprite
 	; draw press any key
 ;	ldy #(VRAM+(768*5)+13)
 ;	ldx #press_a_key
 ;	jsr draw_tile
-	;h = help
-	lda #6 ; width
-	pshu a
-	lda #6 ; height
-	pshu a
-	lda #4  ; x,y
-	ldb #120 ; 
-	ldy #help_sprite
-	jsr draw_sprite	
 	jsr any_key
 	rts
 
