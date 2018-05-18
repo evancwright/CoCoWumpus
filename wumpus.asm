@@ -677,14 +677,9 @@ set_player_sprite
 	;its a room
 	cmpb #WUMPUS
 	bne @r
-	ldx #sprite_white
+	ldx #sprite_white  ; hide the player
 	bra @x
-@r  lda shooting
-	cmpa #0
-	beq @ns
-	ldx #sprite_player_shooting
-	bra @x
-@ns	ldx #sprite_player
+@r	ldx #sprite_player
 	bra @x	
 @a	cmpa #TUNNEL_1
 	bne @b
@@ -699,7 +694,11 @@ set_player_sprite
 	ldx #sprite_player_down_left
 	bra @x	
 @d	ldx #sprite_player_up_right  ; type 4
-@x  puls d
+@x  lda shooting
+	cmpa #$FF
+	bne @y
+	leax 96,x  ; skip to the firing version of the sprite
+@y	puls d
 	rts
 	
 ;sets x to the sprite required
