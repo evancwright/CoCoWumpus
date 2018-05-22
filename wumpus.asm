@@ -516,7 +516,6 @@ draw_player
 	
 	
 	
-	
 ;a contains new room
 move_player
 	sta player_room	
@@ -551,6 +550,9 @@ move_player
 	cmpa #PIT
 	bne @b
 	jsr animate_fall
+	jsr any_key
+	lda #BLACK_FILL
+	jsr cls
 	jsr reveal_board
 	ldx #pit_score
 	jsr increment_score
@@ -1330,10 +1332,6 @@ animate_fall
 	jsr play_static
 	jsr play_static
 	jsr play_static
-	jsr any_key
-	;
-	lda #BLACK_FILL
-	jsr cls
 	rts
 
 ;animates the teeth	
@@ -1481,6 +1479,15 @@ animate_win
 skill_level_screen
 	ldx #choose_skill_tile_map
 	jsr draw_tile_map
+	;draw the title text
+	lda #13 ; width
+	pshu a
+	lda #17 ; height
+	pshu a
+	lda #10
+	ldb #50
+	ldy #sprite_choose_a_cave 
+	jsr draw_sprite
 	jsr draw_selected_skill
 @lp1
 	jsr KBSCAN
