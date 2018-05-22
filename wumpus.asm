@@ -1367,20 +1367,11 @@ animate_wumpus
 	;update loop counter
 	jsr waste_time
 	jsr waste_time
-	jsr waste_time
 	inca
 	cmpa #6
 	beq @d
 	bra @tl
 @d	;draw the eyes
-	ldx #wumpus_music
-	clr 1,x ; reset music
-	jsr play_song
-	jsr waste_time
-	jsr waste_time
-	jsr waste_time
-	jsr waste_time
-	jsr waste_time
 	;eyes
 	lda #2
 	ldb #2
@@ -1392,10 +1383,12 @@ animate_wumpus
 	jsr set_draw_offset
 	ldx #sprite_right_eye
 	jsr draw_tile
-;@lp1
-;	jsr KBSCAN
-;	cmpa #0
-;	beq @lp1	
+	ldx #wumpus_music
+	clr 1,x ; reset music
+	jsr play_song
+ 	jsr waste_time
+	jsr waste_time
+	jsr waste_time
 	rts
 
 ;draws the tile in x 8 times
