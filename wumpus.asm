@@ -262,6 +262,15 @@ draw_title
 ;draws the screen with the tallies
 draw_score_screen
 	jsr blue_border
+	;draw 'scoreboard' sprite
+	lda #10 ;width
+	pshu a
+	lda #6 ; height
+	pshu a
+	lda #10
+	ldb #30
+	ldy #sprite_scoreboard
+	jsr draw_sprite
 	;draw pit
 	lda #4 ; width
 	pshu a
