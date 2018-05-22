@@ -409,6 +409,15 @@ draw_help_screen
 	ldb #70 ; 	
 	ldy #sprite_room_draft	
 	jsr draw_sprite	
+	;draw the bat help text
+	lda #16 ; width
+	pshu a
+	lda #18 ; height
+	pshu a
+	lda #4
+	ldb #95
+	ldy #sprite_bat_text
+	jsr draw_sprite
 	;draw bat
 	lda #2 ; width
 	pshu a
@@ -425,7 +434,7 @@ draw_help_screen
 	lda #8 ; height
 	pshu a
 	lda #4  ; x,y
-	ldb #120 ; 
+	ldb #130 ; 
 	ldy #use_aswd
 	jsr draw_sprite
 	;draw 'to move'
@@ -459,6 +468,7 @@ draw_help_screen
 ;	ldy #(VRAM+(768*5)+13)
 ;	ldx #press_a_key
 ;	jsr draw_tile
+	; draw press any key
 	jsr any_key
 	rts
 

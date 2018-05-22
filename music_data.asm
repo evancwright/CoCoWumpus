@@ -4,23 +4,23 @@ win_music
 	.db 9
 	.db 0
 	.db $70  ; C
-	.dw 60	
+	.dw 50	
 	.db $52
-	.dw 70
+	.dw 60
 	.db $3f
-	.dw 90
+	.dw 80
 	.db $70
-	.dw 60
+	.dw 50
 	.db $52
-	.dw 70
+	.dw 60
 	.db $3F
-	.dw 90
+	.dw 80
 	.db $70
-	.dw 60
+	.dw 50
 	.db $52
-	.dw 70
+	.dw 60
 	.db $3F
-	.dw 90
+	.dw 80
 	
 wumpus_music
 	.db 16  ; num notes
@@ -106,7 +106,7 @@ intro_music
 	.db 26
 	.db 0
 	.db $86  ; A
-	.dw 70  
+	.dw 50  
 	.db $77  ; B
 	.dw 70  
 	.db $70  ; C
@@ -118,23 +118,23 @@ intro_music
 	.db $70  ; C
 	.dw 75  
 	.db $57  ; E
-	.dw 125  		
+	.dw 130  		
 	.db $5E  ; e flat
 	.dw 75
 	.db $77  ; B
 	.dw 75  
 	.db $5e  ; e flat
-	.dw 125
+	.dw 130
 	.db $64  ; D
-	.dw 75 
+	.dw 65  
 	.db $7E  ; B flat
 	.dw 75 
 	.db $64  ; D
 	.dw 125 
 	.db $86  ; A
-	.dw 60  
+	.dw 50  
 	.db $77  ; B
-	.dw 75  
+	.dw 65  
 	.db $70  ; C
 	.dw 75  
 	.db $64  ; D
@@ -144,7 +144,7 @@ intro_music
 	.db $70  ; C
 	.dw 75
 	.db $86  ; A
-	.dw 75 
+	.dw 60 
 	.db $40  ; A high
 	.dw 100  
 	.db $48  ; G high
