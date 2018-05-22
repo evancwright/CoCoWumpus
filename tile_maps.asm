@@ -35,7 +35,7 @@ win_tile_map
 choose_skill_tile_map
 	.dw sprite_tooth_upper,sprite_tooth_upper,sprite_tooth_upper,sprite_tooth_upper,sprite_tooth_upper,sprite_tooth_upper,sprite_tooth_upper,sprite_tooth_upper
 	.dw sprite_orange,sprite_orange,sprite_orange,sprite_orange,sprite_orange,sprite_orange,sprite_orange,sprite_orange
-	.dw sprite_orange,sprite_orange,sprite_cho,sprite_ose,sprite_a_sk,sprite_ill,sprite_orange,sprite_orange
+	.dw sprite_orange,sprite_orange,white_tile,white_tile,white_tile,white_tile,sprite_orange,sprite_orange
 	.dw sprite_orange,sprite_orange,white_tile,skill_level_easy,white_tile,white_tile,sprite_orange,sprite_orange
 	.dw sprite_orange,sprite_orange,white_tile,skill_level_twis,skill_level_ty,white_tile,sprite_orange,sprite_orange
 	.dw sprite_orange,sprite_orange,white_tile,skill_level_very,skill_level_twis,skill_level_ty,sprite_orange,sprite_orange
