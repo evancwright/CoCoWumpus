@@ -39,7 +39,7 @@ wumpus_music
 	.dw 0
 	.db $ef  ; f
 	.dw 75
-	.db $cd  ; g#
+	.db $cb  ; g#
 	.dw 50
 	.db $d5  ; g
 	.dw 25
@@ -106,13 +106,13 @@ intro_music
 	.db 26
 	.db 0
 	.db $86  ; A
-	.dw 75  
+	.dw 70  
 	.db $77  ; B
-	.dw 75  
+	.dw 70  
 	.db $70  ; C
-	.dw 75  
+	.dw 70  
 	.db $64  ; D
-	.dw 75  	
+	.dw 70  	
 	.db $57  ; E
 	.dw 75  		
 	.db $70  ; C
@@ -132,7 +132,7 @@ intro_music
 	.db $64  ; D
 	.dw 125 
 	.db $86  ; A
-	.dw 75  
+	.dw 60  
 	.db $77  ; B
 	.dw 75  
 	.db $70  ; C
@@ -146,9 +146,9 @@ intro_music
 	.db $86  ; A
 	.dw 75 
 	.db $40  ; A high
-	.dw 120  
+	.dw 100  
 	.db $48  ; G high
-	.dw 100  		
+	.dw 90  		
 	.db $57  ; E
 	.dw 75  		
 	.db $70  ; C
