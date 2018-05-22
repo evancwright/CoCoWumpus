@@ -128,6 +128,7 @@ reset
 	jsr draw_title
 	jsr animate_bat
 	jsr animate_fall
+	jsr animate_wumpus
 	jsr skill_level_screen
 	jsr reset_game
 	lda #BLACK_FILL
@@ -244,12 +245,17 @@ draw_title
 	leay 4,y
 	ldx #title_s	
 	jsr draw_tile	
-	;ldx #intro_music
-	;jsr play_song
+	ldx #intro_music
+	jsr play_song
 	; draw press any key
-	ldy #(VRAM+(768*5)+14)
-	ldx #press_a_key
-	jsr draw_tile
+	lda #12
+	pshu a
+	lda #6
+	pshu a
+	lda #10
+	ldb #140
+	ldy #press_a_key
+	jsr draw_sprite
 	jsr any_key
 	rts
 
