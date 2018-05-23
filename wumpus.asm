@@ -149,6 +149,8 @@ reset
 	beq @m
 	cmpa #'Q'
 	beq @s
+	cmpa #'H'
+	beq @h
 	bra @k
 @s ;put player in 'shooting state'
    com shooting ; toggle shooting flag
@@ -169,6 +171,11 @@ reset
 	beq @mv	
 	jsr shoot_arrow
 	bra @x
+@h  jsr draw_help_screen
+	lda #BLACK_FILL
+	jsr cls
+	jsr draw_board
+	bra @lp
 @mv	jsr move_player
 	bra @x
 @er	jsr error_beep
@@ -337,7 +344,7 @@ draw_score_screen
 	ldy #change_skill
 	jsr draw_sprite
 	;draw the p=play again
-	lda #15 ; width
+	lda #11 ; width
 	pshu a
 	lda #6 ; height
 	pshu a
@@ -357,7 +364,7 @@ draw_score_screen
 	bra @x	
 @s1 cmpa #'P'
 	beq @x
-    cmpa #' '
+	cmpa #' '
 	beq @x
 	bra @k
 @x	rts
@@ -443,7 +450,7 @@ draw_help_screen
 	lda #7 ; height
 	pshu a
 	lda #14  ; x,y
-	ldb #120 ; 
+	ldb #130 ; 
 	ldy #to_move
 	jsr draw_sprite	
 	;draw 'to fire'
