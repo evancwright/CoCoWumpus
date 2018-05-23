@@ -476,6 +476,14 @@ draw_help_screen
 ;	ldx #press_a_key
 ;	jsr draw_tile
 	; draw press any key
+	lda #12
+	pshu a
+	lda #6
+	pshu a
+	lda #10
+	ldb #160
+	ldy #press_a_key
+	jsr draw_sprite
 	jsr any_key
 	rts
 
