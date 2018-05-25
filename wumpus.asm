@@ -100,6 +100,13 @@ PLAYER_SCORE_X EQU 8
 PIT_SCORE_X EQU 16
 WUMPUS_SCORE_X EQU 26
 SCORE_Y EQU 80
+
+;key codes
+KEY_UP EQU $5E
+KEY_DOWN EQU $0A
+KEY_LEFT EQU $08
+KEY_RIGHT EQU $09
+ 
  
 VRAM EQU $E00
 	;ORG 0xE00 ; START CODE HERE  (WHEN IT'S A BIN DISK FILE )
@@ -141,16 +148,32 @@ reset
 	beq @k
 	cmpa #'A'
 	beq @m
+	cmpa #KEY_LEFT
+	beq @m
 	cmpa #'S'
 	beq @m
+	cmpa #KEY_DOWN
+	beq @m	
 	cmpa #'W'
 	beq @m
+	cmpa #KEY_UP
+	beq @m	
 	cmpa #'D'
 	beq @m
+	cmpa #KEY_RIGHT
+	beq @m		
 	cmpa #'Q'
 	beq @s
 	cmpa #'H'
 	beq @h
+	cmpa #'X'
+	beq @ch ; cheat
+	cmpa #'X'
+	beq @ch ; cheat
+	cmpa #$1B  ; ESC
+	beq @rs
+	cmpa #$08  ; BS
+	beq @rs	
 	bra @k
 @s ;put player in 'shooting state'
    com shooting ; toggle shooting flag
@@ -176,10 +199,19 @@ reset
 	jsr cls
 	jsr draw_board
 	bra @lp
+@ch	jsr reveal_board
+	lbra @lp
+@rs jsr draw_score_screen
+	jsr reset_game
+	lda #BLACK_FILL
+	jsr cls
+	jsr draw_board
+	jsr draw_player
+	lbra @lp
 @mv	jsr move_player
 	bra @x
 @er	jsr error_beep
-@x	bra @lp
+@x	lbra @lp
 	rts
 	
 ;clears screen with color in A	
@@ -644,20 +676,44 @@ move_player
 @m	jsr play_footstep
 @x	rts	
 	
+;converts a keypress into a direction offset	
+;key_to_offset
+;	cmpa #'W'
+;	bne @a
+;	lda #2
+;	bra @x
+;@a  cmpa #'S'
+;	bne @b
+;	lda #3
+;	bra @x
+;@b	cmpa #'A'
+;	bne @c
+;	lda #4
+;	bra @x
+;@c	lda #5  ; must be 'D'
+;@x	rts
+
 key_to_offset
 	cmpa #'W'
-	bne @a
-	lda #2
+	beq @u
+	cmpa #KEY_UP
+	beq @u
+	cmpa #'S'
+	beq @d
+	cmpa #KEY_DOWN
+	beq @d	
+	cmpa #'A'
+	beq @l
+	cmpa #KEY_LEFT
+	beq @l
+	bra @r
+@u  lda #2
 	bra @x
-@a  cmpa #'S'
-	bne @b
-	lda #3
+@d  lda #3
 	bra @x
-@b	cmpa #'A'
-	bne @c
-	lda #4
+@l	lda #4
 	bra @x
-@c	lda #5  ; must be 'D'
+@r  lda #5	
 @x	rts
 
 ;x points to the room entry in the table
