@@ -251,7 +251,25 @@ draw_title
 	jsr draw_tile
 	leay 4,y
 	ldx #title_s	
-	jsr draw_tile	
+	jsr draw_tile
+	;draw Evan Wright
+	lda #11
+	pshu a
+	lda #6
+	pshu a
+	lda #8
+	ldb #130
+	ldy #sprite_evan
+	jsr draw_sprite
+	;draw Evan Wright
+	lda #4
+	pshu a
+	lda #7
+	pshu a
+	lda #20
+	ldb #129
+	ldy #sprite_2018
+	jsr draw_sprite	
 	ldx #intro_music
 	jsr play_song
 	; draw press any key
