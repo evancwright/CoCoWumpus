@@ -247,7 +247,7 @@ draw_title
 	ldx #title_p	
 	jsr draw_tile
 	leay 4,y
-	ldx #title_u2	
+	ldx #title_u	
 	jsr draw_tile
 	leay 4,y
 	ldx #title_s	
