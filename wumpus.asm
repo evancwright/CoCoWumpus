@@ -164,6 +164,8 @@ reset
 	beq @m		
 	cmpa #'Q'
 	beq @s
+	cmpa #'F'
+	beq @s
 	cmpa #'H'
 	beq @h
 	cmpa #'X'
@@ -292,6 +294,15 @@ draw_title
 	lda #8
 	ldb #130
 	ldy #sprite_evan
+	jsr draw_sprite
+	;draw "hunt the" sprite
+	lda #7
+	pshu a
+	lda #6
+	pshu a
+	lda #12
+	ldb #82
+	ldy #sprite_hunt_the
 	jsr draw_sprite
 	;draw Evan Wright
 	lda #4
