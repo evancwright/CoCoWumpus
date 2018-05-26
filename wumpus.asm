@@ -1606,6 +1606,11 @@ skill_level_screen
 	cmpa #$0d  ; cr
 	beq @x
 	cmpa #'W'  ; up?
+	beq @u
+	cmpa #KEY_UP  ; up?
+	beq @u
+	bra @s
+@u	cmpa #KEY_UP  ; up?
 	bne @d
 	dec skill_level
     lda skill_level
@@ -1614,9 +1619,12 @@ skill_level_screen
 	lda #2
 	sta skill_level
 	bra @c
-@d  cmpa #'S'
-	bne @lp1
-	inc skill_level
+@s  cmpa #'S'
+	beq @d
+	cmpa #KEY_DOWN
+	beq @d
+	bra @lp1
+@d	inc skill_level
     lda skill_level
 	cmpa #3
 	bne @c
