@@ -888,6 +888,18 @@ find_non_tunnel
 	leas 1,s ; pop local var
 	puls b ; restore b
 	rts
+
+;randomly makes a tunnel of type 1 or 2	
+make_a_tunnel
+	jsr rand
+	pulu d
+	andb #$1  ; mask off all but bit 0
+	cmpb #1
+	beq @t
+	jsr make_tunnel_1
+	bra @x
+@t	jsr make_tunnel_2
+@x	rts
 	
 ;makes a / tunnel
 ;the bottom half becomes a new room
@@ -1775,32 +1787,32 @@ make_tunnels
 	lda skill_level
 	cmpa #EASY ; QUIT (5 tunnels)
 	beq @x
-	jsr make_tunnel_1
-	jsr make_tunnel_1
-	jsr make_tunnel_2
-    jsr make_tunnel_2
-	jsr make_tunnel_1
-	jsr make_tunnel_2
-    jsr make_tunnel_2	
-	jsr make_tunnel_1 //8 (13 total)
+	jsr make_a_tunnel
+	jsr make_a_tunnel
+	jsr make_a_tunnel
+    jsr make_a_tunnel
+	jsr make_a_tunnel
+	jsr make_a_tunnel
+    jsr make_a_tunnel	
+	jsr make_a_tunnel //8 (13 total)
 	lda skill_level
 	cmpa #MEDIUM (15 tunnels)
 	beq @x
-    jsr make_tunnel_2	
-	jsr make_tunnel_1
-	jsr make_tunnel_1
-	jsr make_tunnel_1
-	jsr make_tunnel_2
-    jsr make_tunnel_2
-	jsr make_tunnel_1
-    jsr make_tunnel_2	
-	jsr make_tunnel_1
+    jsr make_a_tunnel
+	jsr make_a_tunnel
+	jsr make_a_tunnel
+	jsr make_a_tunnel
+	jsr make_a_tunnel
+    jsr make_a_tunnel
+	jsr make_a_tunnel
+    jsr make_a_tunnel
+	jsr make_a_tunnel
 	;
-	jsr make_tunnel_2	
-	jsr make_tunnel_1
-	jsr make_tunnel_1
-	jsr make_tunnel_1
-	jsr make_tunnel_2
+	jsr make_a_tunnel
+	jsr make_a_tunnel
+	jsr make_a_tunnel
+	jsr make_a_tunnel
+	jsr make_a_tunnel
 @x	rts
 	
 ;overwrites the room data with a 'clean' copy
