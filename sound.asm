@@ -60,10 +60,10 @@ play_note
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 error_beep:	
 	pshs a,y
-	ldy	#20		;length (short)
-	lda #10	;low a
-	sta freq
-	jsr sound_play2
+	ldy	#10		;length (short)
+	lda #$F0	;low
+	sta delay_value
+	jsr sound_play
 	puls y,a
 	rts
 
@@ -74,28 +74,16 @@ error_beep:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 play_footstep:	
 	pshs a,y
-	ldy	#2		;length (short)
-	lda #120	;low a
-	sta freq
-	jsr sound_play2
-	puls y,a
+	ldy #main
+	sty static_start
+;	ldy	#5		;length (short)
+;	lda #200	;low a
+;	sta freq
+;	jsr sound_play
+	jsr play_static
+	puls a,y
 	rts	
 	
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;multiplies y times 6. used by sound_play2
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-ytimes6
-	pshs d
-	exg y,d  ; y->d
-	std temp_word
-	ldy #4
-@lp addd temp_word 	
-	leay -1,y
-	cmpy #0
-	bne @lp
-	exg d,y ; d->y
-	puls d
-	rts
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;static
@@ -155,52 +143,7 @@ sound_play
 	puls d,x,y
 	rts	
 	
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; plays a tone 
-; freq location contains frequency
-; sound_length contains the number of times to loop
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-sound_play2
-	;adjust the length based on freq
-	lda sound_length
-	sta dividend
-	ldb freq
-	stb divisor
-	jsr div8
-	sta quotient 
-	;main sound loop - the delay which 
-	ldy quotient_16
-	jsr ytimes6
-	;setup snd
-	;lda #65
-	;sta $400
-	lda PIA_CTRL1
-	anda #$f7		;reset mux bit (why?)
-	sta PIA_CTRL1	; (sound to spkr?)
-	;lda #66
-	;sta $400
-	lda PIA_CTRL2	
-	anda #$f7
-	sta PIA_CTRL2 	; (sound on?)
-	;lda #67
-	;sta $400
-	lda PIA_SND_ENABLE
-	ora #8			; get bit 6
-	sta PIA_SND_ENABLE
-	;lda #68
-	;sta $400
-	;main loop
-	leay 1,y		;make sure y is not 0
-@o	ldx	snd_data+3	; load start addr
-@i	lda ,x+			; get next byte
-	anda #$fc		; reset 2 ls bits
-	sta	PIA_DATA
-	jsr snd_delay	; use delay to control freq
-	cmpx snd_data+5	; test for end addr
-	bne @i			; keep going
-	leay -1,y		; dec main lp countr (sets z flag)
-	bne @o			; start over at beginning of sound data
-	rts
+ 
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;	WASTE TIME

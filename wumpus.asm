@@ -1532,6 +1532,8 @@ draw_row
 ;animates the bat flying a player to a new room
 animate_bat
 	pshs d,x,y
+	ldy #main
+	sty static_start
 	ldx #tunnel_tile_map
 	jsr draw_tile_map
 	lda #0
@@ -2171,10 +2173,10 @@ player_wins .db 0
 pit_wins .db 0
 skill_level .db 1 ; 0,1, or 2
 color .db $E4 ; 11100100	
-dividend 	.db 0x00
-divisor 	.db 0x00
-quotient_16 .db 0x00 ; padding (for loading it into y)
-quotient  	.db 0x00
+;dividend 	.db 0x00
+;divisor 	.db 0x00
+;quotient_16 .db 0x00 ; padding (for loading it into y)
+;quotient  	.db 0x00
 temp_word 	.dw 0
 ;1st byte is number of chars
 ;each byte is a base 10 digit
