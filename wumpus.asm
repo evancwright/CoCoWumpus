@@ -413,6 +413,15 @@ draw_score_screen
 	ldb #140 ; 
 	ldy #play_again
 	jsr draw_sprite
+	;q to quit
+	lda #6 ; width
+	pshu a
+	lda #7 ; height
+	pshu a
+	lda #10  ; x,y
+	ldb #150 ; 
+	ldy #q_to_quit ; 6 x 7
+	jsr draw_sprite
 @k
 	jsr KBSCAN
 	cmpa #'H'
