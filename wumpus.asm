@@ -352,15 +352,26 @@ draw_score_screen
 	ldb #50 ; 
 	ldy #sprite_pit
 	jsr draw_sprite	
+	;draw wumpus left
+	lda #4 ; width
+	pshu a
+	lda #24 ; height
+	pshu a
+	lda #WUMPUS_SCORE_X-5  ; x,y
+	ldb #50 ; 
+	;ldy #tile_wumpus
+	ldy #sprite_wumpus_left
+	jsr draw_sprite
 	;draw wumpus
 	lda #4 ; width
 	pshu a
 	lda #24 ; height
 	pshu a
-	lda #WUMPUS_SCORE_X-3  ; x,y
+	lda #WUMPUS_SCORE_X-1  ; x,y
 	ldb #50 ; 
-	ldy #tile_wumpus
+	ldy #sprite_wumpus_right
 	jsr draw_sprite
+
 	;draw player
 	lda #4 ; width
 	pshu a
