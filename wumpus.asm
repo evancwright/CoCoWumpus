@@ -169,8 +169,10 @@ reset
 	beq @h
 	cmpa #'X'
 	beq @ch ; cheat
-	cmpa #'X'
+	cmpa #'Y'
 	beq @ch ; cheat
+	cmpa #'Z'
+	beq @ch ; cheat	
 	cmpa #$1B  ; ESC
 	beq @rs
 	cmpa #$08  ; BS
@@ -199,8 +201,8 @@ reset
 	lda #BLACK_FILL
 	jsr cls
 	jsr draw_board
-	bra @lp
-@ch	jsr reveal_board
+	lbra @lp
+@ch	jsr press_cheat
 	lbra @lp
 @rs jsr draw_score_screen
 	jsr reset_game
@@ -1781,6 +1783,7 @@ reveal_board
 ;reinitializes all rooms and places
 ;player and hazards
 reset_game
+	clr cheat
 	jsr reset_rooms
 	jsr make_tunnels
 	jsr place_pit
@@ -1925,8 +1928,40 @@ draw_score
 	leas 3,s   ; pop locals
 	puls d,x,y
 	rts
-	
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;handles x,y,z being pressed
+;if all 3 have been pressed, the board is revealed
+;a contains key
+;a is preserved
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
+press_cheat
+	pshs a
+	cmpa #'X'
+	bne @s1
+	lda cheat
+	ora #1
+	sta cheat
+	bra @t
+@s1	cmpa #'Y'
+	bne @s2
+	lda cheat
+	ora #2
+	sta cheat
+	bra @t
+@s2 cmpa #'Z'
+	bne @x
+	lda cheat
+	ora #4
+	sta cheat
+@t  lda cheat
+	cmpa #7
+	bne @x
+	jsr reveal_board
+	jsr draw_player
+@x	puls a
+	rts
+	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;PLAYS THE WIN MUSIC 
 ;A IS CLOBBERED
@@ -2197,7 +2232,7 @@ temp_word 	.dw 0
 pit_score .db 3,0,0,0
 wump_score .db 3,0,0,0
 player_score .db 3,0,0,0
-
+cheat .db 0   ; %111 = show board
 sstack_save .dw 0
 ustack_save .dw 0
 static_start .dw 0
