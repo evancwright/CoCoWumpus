@@ -218,6 +218,8 @@ reset
 quit
 	lds sstack_save
 	ldu ustack_save
+	lda #0
+	sta $2dd  ; zero out keyboard buf (prevents SYNTAX ERR)
 	rts
 	
 ;clears screen with color in A	
