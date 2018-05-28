@@ -122,7 +122,6 @@ main
  	;save stacks in case of warm restart
 	sts sstack_save
 	stu ustack_save
-
 reset	
 	nop ; BASIC LOOKS FOR A NOP ON WARM RESTART!!!!!
 	;restore stacks (in case of warm restart)
@@ -214,6 +213,9 @@ reset
 	bra @x
 @er	jsr error_beep
 @x	lbra @lp
+quit
+	lds sstack_save
+	ldu ustack_save
 	rts
 	
 ;clears screen with color in A	
@@ -424,6 +426,8 @@ draw_score_screen
 	jsr draw_sprite
 @k
 	jsr KBSCAN
+	cmpa #'Q'
+	lbeq quit
 	cmpa #'H'
 	bne @s
 	jsr draw_help_screen
@@ -435,8 +439,8 @@ draw_score_screen
 @s1 cmpa #'P'
 	beq @x
 	cmpa #' '
-	beq @x
-	bra @k
+	beq @x	
+	bra @k ; kbloop
 @x	rts
 
 draw_help_screen
@@ -1354,6 +1358,7 @@ shoot_arrow
 	bra @x
 @n  jsr animate_wumpus
 	jsr reveal_board
+	jsr draw_score_screen
 	jsr reset_game
 @x	lda #0 ; reset shoot flag
 	sta shooting
