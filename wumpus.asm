@@ -1892,13 +1892,13 @@ any_key
 	jsr KBSCAN
 	cmpa #0
 	beq @lp
-	ldb CUR_RAND+1 ; left lsb to msb
-	stb CUR_RAND
+	ldb cur_rand+1 ; left lsb to msb
+	stb cur_rand
 	lda ,s			; new lsb 
 	cmpa #0	
 	bne @s
 	lda #1   ; don't let a seed be 0!
-@s	sta CUR_RAND+1
+@s	sta cur_rand+1
 	leas 1,s  ; pop local
 	rts
 	
@@ -2250,7 +2250,19 @@ sstack_save .dw 0
 ustack_save .dw 0
 static_start .dw 0
 rv_save .dw 0 ; reset vector save
-
+;DATA FOR RANDOM NUMBER GENERATION
+cur_rand		.dw 0x0f0f
+; rand			.dw 0x0000
+one_in_msb		.db 0x80
+left_tap_mask 	.db 0x80 ; 1000 0000
+right_tap_mask 	.db 0x01 ; 0000 0001
+left_tap  		.db 0x00
+right_tap  		.db 0x00
+xor_rslt		.db 0x00
+output
+	.dw 0x0000
+	.dw 0x0000
+	.dw 0x0000
 	END START
 
 	; Full graphic 3-C  11001100 128x96x4   $C00(3072
