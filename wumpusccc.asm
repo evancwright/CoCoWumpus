@@ -48,7 +48,7 @@ TILE_BYTE_WIDTH EQU 4
 TILE_HEIGHT EQU 24
 ROW_SKIP EQU ((TILE_HEIGHT*32)-32) ; 480
 NUM_TILES EQU 64 ; 12 x 8 = 
-MAX_ROOMS EQU 80
+MAX_ROOMS EQU 94 
 VISITED EQU 1
 WUMPUS EQU 2
 PIT EQU 4
@@ -68,7 +68,6 @@ UP EQU 2
 DOWN EQU 3
 LEFT EQU 4
 RIGHT EQU 5
-
 EASY EQU 0
 MEDIUM EQU 1
 HARD EQU 2
@@ -1178,8 +1177,8 @@ clear_marks
 	anda #CLR_MARK
 	sta ROOM_FLAGS_OFFSET,x
 	incb 
-	cmpb last_room
-	bhi @x
+	cmpb #MAX_ROOMS
+	beq @x
 	leax ROOM_SIZE,x
 	bra @lp
 @x	puls d,x
@@ -1386,9 +1385,7 @@ shoot_arrow
 	jsr reveal_board
 	jsr draw_score_screen
 	jsr reset_game
-@x	lda #0 ; reset shoot flag
-	sta shooting
-	rts
+@x	rts
 	
 ;draws the arrow flying
 animate_arrow
@@ -1818,6 +1815,7 @@ reset_game
 	lda #BLACK_FILL
 	jsr cls
 	jsr draw_board
+	clr shooting
 	jsr draw_player
 	ldx #start_music
 	jsr play_song

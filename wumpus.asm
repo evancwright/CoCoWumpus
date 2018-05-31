@@ -48,7 +48,7 @@ TILE_BYTE_WIDTH EQU 4
 TILE_HEIGHT EQU 24
 ROW_SKIP EQU ((TILE_HEIGHT*32)-32) ; 480
 NUM_TILES EQU 64 ; 12 x 8 = 
-MAX_ROOMS EQU 80
+MAX_ROOMS EQU 94
 VISITED EQU 1
 WUMPUS EQU 2
 PIT EQU 4
@@ -1167,8 +1167,8 @@ clear_marks
 	anda #CLR_MARK
 	sta ROOM_FLAGS_OFFSET,x
 	incb 
-	cmpb last_room
-	bhi @x
+	cmpb #MAX_ROOMS
+	beq @x
 	leax ROOM_SIZE,x
 	bra @lp
 @x	puls d,x
@@ -1797,6 +1797,7 @@ reveal_board
 ;player and hazards
 reset_game
 	clr cheat
+	clr shooting
 	jsr reset_rooms
 	jsr make_tunnels
 	jsr place_pit
@@ -1808,6 +1809,7 @@ reset_game
 	lda #BLACK_FILL
 	jsr cls
 	jsr draw_board
+	jsr draw_player
 	rts
 
 make_tunnels
