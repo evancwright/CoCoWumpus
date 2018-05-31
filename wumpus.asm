@@ -2239,6 +2239,7 @@ color .db $E4 ; 11100100
 ;divisor 	.db 0x00
 ;quotient_16 .db 0x00 ; padding (for loading it into y)
 ;quotient  	.db 0x00
+vskip .db 0	 ; two's complement
 temp_word 	.dw 0
 ;1st byte is number of chars
 ;each byte is a base 10 digit
@@ -2263,6 +2264,20 @@ output
 	.dw 0x0000
 	.dw 0x0000
 	.dw 0x0000
+;sound
+fill_freq .dw 0x0000	
+freq .db 0x01	
+sound_length .db 0x00
+tone_length .dw 0x00ff
+delay_value .db 128
+
+snd_data	
+	.dw 0x10				;repeat count
+	.db 0x0f				;delay
+	.dw snd_tabl	
+	.dw snd_tabl+4		
+ 
+ 
 	END START
 
 	; Full graphic 3-C  11001100 128x96x4   $C00(3072
