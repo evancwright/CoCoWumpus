@@ -1,7 +1,34 @@
 ;music data
 
+start_music
+	.db 11
+	.db 0
+	.db $70  ; C
+	.dw 50	
+	.db $35  ; C
+	.dw 200	
+	.db 0  ; pause
+	.dw 0
+	.db $35  ; C
+	.dw 100	
+	.db $48  ; g
+	.dw 110
+	.db 0  ; pause
+	.dw 0
+	.db $48  ; g
+	.dw 75
+	.db $57 ;e 
+	.dw 100
+	.db 0  ; pause
+	.dw 0
+	.db $57 ;e 
+	.dw 75
+	.db $70  ; C
+	.dw 125	
+	
+	
 win_music
-	.db 9
+	.db 9  ; notes cur note
 	.db 0
 	.db $70  ; C
 	.dw 50	
