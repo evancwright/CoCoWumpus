@@ -171,7 +171,7 @@ draw_sprite
 	leax VRAM,x		
 	lda #32 ; (vksip = -1 * (32 - w) )
 	suba 1,u
-	sta @vskip
+	sta vskip
 	;a is outer loop (rows)
 	;b is inner loop (cols)
 	clra
@@ -184,7 +184,7 @@ draw_sprite
 	incb
 	cmpb  1,u ; end of row
 	bne @il	
-	ldb @vskip
+	ldb vskip
 	abx
 	clrb
 	puls a ;restore outer loop counter
@@ -192,7 +192,6 @@ draw_sprite
 	cmpa ,u  ; copied all rows?
 	bne @ol
 	bra @x
-@vskip .db 0	 ; two's complement
 @x	leau 2,u  ; pop h,w params
 	puls d,x,y
 	rts	
