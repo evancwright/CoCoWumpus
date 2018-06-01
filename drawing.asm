@@ -36,6 +36,7 @@ fill_rect
 @c	;
 	bra @lp
 @x	leas 2,s ; pop 2 params
+	leau 5,u
 	puls d,x,y
 	rts
 
