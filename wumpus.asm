@@ -527,7 +527,7 @@ draw_help_screen
 	;h = help
 	lda #12 ; width
 	pshu a
-	lda #8 ; height
+	lda #9 ; height
 	pshu a
 	lda #4  ; x,y
 	ldb #130 ; 
@@ -545,10 +545,10 @@ draw_help_screen
 	;draw 'to fire'
 	lda #12 ; width
 	pshu a
-	lda #7 ; height
+	lda #9 ; height
 	pshu a
 	lda #4  ; x,y
-	ldb #140 ; 
+	ldb #142 ; 
 	ldy #to_fire
 	jsr draw_sprite		
 	;draw 'to fire'
@@ -557,7 +557,7 @@ draw_help_screen
 	lda #9 ; height
 	pshu a
 	lda #16  ; x,y
-	ldb #140 ; 
+	ldb #142 ; 
 	ldy #then_aswd
 	jsr draw_sprite
 	; draw press any key
@@ -1087,6 +1087,11 @@ find_room_end
 	cmpb #0
 	beq @ct
 	lda RIGHT,x	; right is only remaining dir
+	jsr is_marked
+	cmpb #0
+	beq @ct
+	lda 1,u   ; just return the original room
+	bra @x
 @ct	bra @lp
 @x	leau 2,u ; pop params
 	rts
@@ -1774,7 +1779,8 @@ draw_tile_map
 	rts
 
 ;sets the visited bit to true on 
-;all the rooms
+;all the rooms, redraws it, then
+;waits for a keypress
 reveal_board
 	pshs d,x,y
 	lda #0

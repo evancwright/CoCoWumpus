@@ -537,7 +537,7 @@ draw_help_screen
 	;h = help
 	lda #12 ; width
 	pshu a
-	lda #8 ; height
+	lda #9 ; height
 	pshu a
 	lda #4  ; x,y
 	ldb #130 ; 
@@ -555,10 +555,10 @@ draw_help_screen
 	;draw 'to fire'
 	lda #12 ; width
 	pshu a
-	lda #7 ; height
+	lda #9 ; height
 	pshu a
 	lda #4  ; x,y
-	ldb #140 ; 
+	ldb #142 ; 
 	ldy #to_fire
 	jsr draw_sprite		
 	;draw 'to fire'
@@ -567,7 +567,7 @@ draw_help_screen
 	lda #9 ; height
 	pshu a
 	lda #16  ; x,y
-	ldb #140 ; 
+	ldb #142 ; 
 	ldy #then_aswd
 	jsr draw_sprite
 	; draw press any key
@@ -1097,6 +1097,11 @@ find_room_end
 	cmpb #0
 	beq @ct
 	lda RIGHT,x	; right is only remaining dir
+	jsr is_marked
+	cmpb #0
+	beq @ct
+	lda 1,u   ; just return the original room
+	bra @x
 @ct	bra @lp
 @x	leau 2,u ; pop params
 	rts
@@ -1112,7 +1117,7 @@ mask_white
 	puls d
 	rts
 
-;sets transparency to orange
+;sets  transparency to orange
 mask_orange
 	pshs d
 	ldd orange_mask
@@ -1322,42 +1327,50 @@ slime_neighbors
 	pshs d,x,y
 	;mark up down left,right as having slime
 	tfr a,b
-	pshs b ; save start room
+	pshs b ; save start room (local)
     pshu b ; push start room
 	lda #UP
 	pshu a ; push direction
 	jsr find_room_end
+	cmpa ,s
+	beq @s1
 	lda ROOM_FLAGS_OFFSET,x
 	ora #SLIME
 	sta ROOM_FLAGS_OFFSET,x 
 	;down
-	lda ,s
+@s1	lda ,s
 	pshu a
 	lda #DOWN
 	pshu a ; push direction
 	jsr find_room_end
+	cmpa ,s
+	beq @s2
 	lda ROOM_FLAGS_OFFSET,x
 	ora #SLIME
 	sta ROOM_FLAGS_OFFSET,x 
 	;left
-	lda ,s
+@s2	lda ,s
 	pshu a
 	lda #LEFT
 	pshu a ; push direction
 	jsr find_room_end
+	cmpa ,s
+	beq @s3
 	lda ROOM_FLAGS_OFFSET,x
 	ora #SLIME
 	sta ROOM_FLAGS_OFFSET,x 
 	;right
-	lda ,s
+@s3	lda ,s
 	pshu a
 	lda #RIGHT
 	pshu a ; push direction
 	jsr find_room_end
+	cmpa ,s
+	beq @s4
 	lda ROOM_FLAGS_OFFSET,x
 	ora #SLIME
 	sta ROOM_FLAGS_OFFSET,x 
-	puls a ; pop local var
+@s4	puls a ; pop local var
 	puls d,x,y
 	rts
 
@@ -1781,7 +1794,8 @@ draw_tile_map
 	rts
 
 ;sets the visited bit to true on 
-;all the rooms
+;all the rooms, redraws it, then
+;waits for a keypress
 reveal_board
 	pshs d,x,y
 	lda #0
@@ -1917,7 +1931,7 @@ any_key
 ;draws the score on the screen
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; a = x in 4 pixel units
-; b = y in pixels`
+; b = y in  pixels`
 ; x contains score data address
 draw_score
 	pshs d,x,y
@@ -1940,7 +1954,7 @@ draw_score
 	pshu a	
 	lda 5,s ; reload x coord  
 	ldb 4,s ; reload y coord  
-	jsr draw_sprite ; draw sprite x and addr y
+	jsr draw_sprite ; draw sprite x and addr y (should clean ustack)
 	dec 5,s ; move left on screen
 	dec 5,s ; move left on screen
 	puls x ; restore data addr
@@ -1949,7 +1963,7 @@ draw_score
 	inca
     cmpa ,s ; drawn all digits?
 	bne @lp
-	leas 3,s   ; pop locals
+	leas 3,s   ; pop locals	
 	puls d,x,y
 	rts
 
