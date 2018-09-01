@@ -12,19 +12,19 @@ start_music
 	.db $35  ; C
 	.dw 100	
 	.db $48  ; g
-	.dw 110
+	.dw 100
 	.db 0  ; pause
 	.dw 0
 	.db $48  ; g
 	.dw 75
 	.db $57 ;e 
-	.dw 100
+	.dw 90
 	.db 0  ; pause
 	.dw 0
 	.db $57 ;e 
-	.dw 75
+	.dw 65
 	.db $70  ; C
-	.dw 125	
+	.dw 100	
 	
 	
 win_music
@@ -135,27 +135,27 @@ intro_music
 	.db $86  ; A
 	.dw 50  
 	.db $77  ; B
-	.dw 70  
+	.dw 65  
 	.db $70  ; C
 	.dw 70  
 	.db $64  ; D
 	.dw 70  	
 	.db $57  ; E
-	.dw 75  		
+	.dw 70  		
 	.db $70  ; C
-	.dw 75  
+	.dw 70  
 	.db $57  ; E
 	.dw 130  		
 	.db $5E  ; e flat
 	.dw 75
 	.db $77  ; B
-	.dw 75  
+	.dw 70  
 	.db $5e  ; e flat
 	.dw 130
 	.db $64  ; D
 	.dw 65  
 	.db $7E  ; B flat
-	.dw 75 
+	.dw 70 
 	.db $64  ; D
 	.dw 125 
 	.db $86  ; A
@@ -163,14 +163,14 @@ intro_music
 	.db $77  ; B
 	.dw 65  
 	.db $70  ; C
-	.dw 75  
+	.dw 65  
 	.db $64  ; D
-	.dw 75  	
+	.dw 70  	
 	.db $57  ; E
-	.dw 75  		
+	.dw 70  		
 	.db $70  ; C
-	.dw 75
-	.db $86  ; A
+	.dw 70
+	.db $86  ; A low
 	.dw 60 
 	.db $40  ; A high
 	.dw 100  
