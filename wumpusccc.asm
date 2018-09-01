@@ -1527,6 +1527,7 @@ animate_wumpus
 	;white out old top line
 	ldy temp_upper
 	ldx #sprite_white
+;	ldx #sprite_blue
 	jsr draw_row
 	;add 768 to old top
 	leay 768,y
@@ -1836,11 +1837,11 @@ reset_game
 	rts
 
 make_tunnels
-	jsr make_tunnel_1
-	jsr make_tunnel_1
-	jsr make_tunnel_1
-	jsr make_tunnel_2
-    jsr make_tunnel_2  //5
+	jsr make_a_tunnel
+	jsr make_a_tunnel
+	jsr make_a_tunnel
+	jsr make_a_tunnel
+    jsr make_a_tunnel  //5
 	lda skill_level
 	cmpa #EASY ; QUIT (5 tunnels)
 	beq @x
