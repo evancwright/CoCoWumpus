@@ -1526,8 +1526,8 @@ animate_wumpus
 @tl	
 	;white out old top line
 	ldy temp_upper
-	ldx #sprite_white
-;	ldx #sprite_blue
+;	ldx #sprite_white
+	ldx #sprite_blue
 	jsr draw_row
 	;add 768 to old top
 	leay 768,y
