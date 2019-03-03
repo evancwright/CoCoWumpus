@@ -1,8 +1,12 @@
-;cocowumpus
+;Hunt the Wumpus Cartridge for Coco 2/3 (and maybe 1)
+;3/2/2019
+;relocated video to 0x400
+;relocated variables to 0x1C00
+;replaced calls to KBSCAN with indirect calls to POLLCAT
 
 ;ROM ROUTINES
-KBSCAN 	EQU $A1CB
-
+;KBSCAN 	EQU $A1CB
+POLLCAT EQU $A000
 ;SAM VIDEO PAGE PAGE
 SAM_V0_CLR EQU $FFC0
 SAM_V0_SET EQU $FFC1
@@ -106,16 +110,13 @@ KEY_DOWN EQU $0A
 KEY_LEFT EQU $08
 KEY_RIGHT EQU $09
  
-variable_ram_addr EQU $2600 ; where to put variables
+variable_ram_addr EQU $1C00 ; where to put variables
+VRAM EQU $400  ; start of screen
  
-VRAM EQU $E00  ; start of screen
 	ORG 0XC000 ; START OF CARTRIDGE ROM
 START
  
 main
-	.dw $444B  'DK HEADER'
-;	lda #BLACK_FILL
-;	jsr cls
 	ldy #main
 	sty static_start
  	;save stacks in case of warm restart
@@ -129,12 +130,7 @@ reset
 	;restore stacks (in case of warm restart)
 	
 	jsr setup_sam
-;	lda #BLACK_FILL
-;	jsr cls
 	include calibration.asm
-	;push stack ptrs
-;	ldx sstack_save
-;	ldy ustack_save
 	pshs x,y
 	jsr relocate_vars	; will clobber stack pointers
 	puls x,y
@@ -152,7 +148,7 @@ reset
 @lp
 	jsr draw_board
 	jsr draw_player
-@k	jsr KBSCAN
+@k	jsr [POLLCAT]
 	cmpa #0
 	beq @k
 	cmpa #'A'
@@ -243,16 +239,16 @@ cls
 	
 ;pmode 1
 setup_sam
-	; Full graphic 3-C  11001100 128x192x4   $E00(3072) 	
+	; Full graphic 3-C  11001100 128x192x4   $400(page2) 	
 	lda #1 
 	;set SAM mode (artifact colors)
 	sta SAM_V0_CLR
 	sta SAM_V1_SET
 	sta SAM_V2_SET 
-	;set page page (7)
-	sta SAM_PG_F0_SET
+	;set page page (2)
+	sta SAM_PG_F0_CLR
 	sta SAM_PG_F1_SET
-	sta SAM_PG_F2_SET
+	sta SAM_PG_F2_CLR
 	sta SAM_PG_F3_CLR
 	sta SAM_PG_F4_CLR
 	sta SAM_PG_F5_CLR
@@ -449,8 +445,9 @@ draw_score_screen
 ;	ldb #150 ; 
 ;	ldy #q_to_quit ; 6 x 7
 ;	jsr draw_sprite
+
 @k
-	jsr KBSCAN
+	jsr [POLLCAT]
 	cmpa #'Q'
 	lbeq quit
 	cmpa #'H'
@@ -1396,6 +1393,8 @@ shoot_arrow
 	bra @x
 @n  jsr animate_wumpus
 	jsr reveal_board
+	ldx #wump_score
+	jsr increment_score
 	jsr draw_score_screen
 	jsr reset_game
 @x	rts
@@ -1663,8 +1662,10 @@ skill_level_screen
 	ldy #sprite_choose_a_cave 
 	jsr draw_sprite
 	jsr draw_selected_skill
+;@lp1
+;	jsr KBSCAN
 @lp1
-	jsr KBSCAN
+	jsr [POLLCAT]
 	cmpa #0
 	beq @lp1
 	cmpa #$0d  ; cr
@@ -1915,7 +1916,8 @@ any_key
 	clra	
 @lp
 	inc ,s
-	jsr KBSCAN
+	;jsr KBSCAN
+	jsr [POLLCAT]
 	cmpa #0
 	beq @lp
 	ldb cur_rand+1 ; left lsb to msb
@@ -2162,7 +2164,7 @@ end_cfg_data
 	
 
 program_area_end
-	ORG 0x2600
+	ORG 0x1C00
 variable_area_start	
 rooms
 	.db 0,0,56,8,7,1,0,0 ; x,y,u,d,l,r,flags 0
@@ -2326,6 +2328,8 @@ snd_data
 	include music_data.asm  ; cur note needs to be in RAM
 	
 variable_area_end 	
+	 
+	.db 0
 	END START
 
 	; Full graphic 3-C  11001100 128x96x4   $E00(3072+
