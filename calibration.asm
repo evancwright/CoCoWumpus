@@ -19,12 +19,6 @@
 	ldb #50 ;y
 	ldy #press_reset
 	jsr draw_sprite
-	;draw colored squares
-;	lda #4
-;	ldb #4
-;	jsr set_draw_offset
-;	ldx #color_calibration
-;	jsr draw_tile
 	lda #3
 	ldb #4
 	jsr set_draw_offset
@@ -54,7 +48,8 @@
 	ldy #if_correct
 	jsr draw_sprite
 @lp2
-	jsr KBSCAN
+;	jsr KBSCAN
+	jsr [POLLCAT]
 	cmpa #0
 	beq @lp2
 
