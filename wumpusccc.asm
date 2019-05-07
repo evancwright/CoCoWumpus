@@ -1405,8 +1405,14 @@ animate_arrow
 	cmpa #LEFT
 	beq @l
 	cmpa #DOWN
-	beq @l
-	jsr animate_arrow_right
+	beq @d
+	cmpa #UP	
+	beq @u
+@r  jsr animate_arrow_right
+	bra @x
+@d	jsr animate_arrow_down
+	bra @x
+@u	jsr animate_arrow_up
 	bra @x
 @l	jsr animate_arrow_left
 @x	rts
@@ -1484,13 +1490,85 @@ animate_arrow_right
 @d
 	puls d,x,y
 	rts
+	
+;draws the arrow flying down
+animate_arrow_down
+  	ldx #pit_tile_map
+	jsr draw_tile_map
+	ldx #sprite_arrow_down1
+	lda #3
+	ldb #0
+	jsr set_draw_offset
+	jsr draw_tile
+	jsr waste_time
+	ldx #sprite_arrow_down2
+	jsr draw_tile
+	;jsr waste_time
+@l1 
+	;erase last tile
+	ldx #sprite_white
+	jsr draw_tile
+	; inc loop counter
+	incb
+	cmpb #7
+	beq @d
+	pshs a ; save loop counter
+	lda #3
+	jsr set_draw_offset
+	puls a ; restore loop counter
+	ldx #sprite_arrow_down1
+	jsr draw_tile
+	jsr waste_time
+	ldx #sprite_arrow_down2
+	jsr draw_tile
+	jsr waste_time
+	bra @l1
+@d	
+	rts	
 
+	
+;draws the arrow flying down
+animate_arrow_up
+  	ldx #pit_tile_map
+	jsr draw_tile_map
+	ldx #sprite_arrow_up1
+	lda #3
+	ldb #7
+	jsr set_draw_offset
+	jsr draw_tile
+	jsr waste_time
+	ldx #sprite_arrow_up2
+	jsr draw_tile
+	;jsr waste_time
+@l1 
+	;erase last tile
+	ldx #sprite_white
+	jsr draw_tile
+	; inc loop counter
+	decb
+	cmpb #0
+	beq @d
+	pshs a ; save loop counter
+	lda #3
+	jsr set_draw_offset
+	puls a ; restore loop counter
+	ldx #sprite_arrow_up1
+	jsr draw_tile
+	jsr waste_time
+	ldx #sprite_arrow_up2
+	jsr draw_tile
+	jsr waste_time
+	bra @l1
+@d	
+	rts	
+	
 ;draws the player falling
 animate_fall
 	ldx #fall_music
 	clr 1,x ; reset cur sound
  	ldx #pit_tile_map
 	jsr draw_tile_map
+	jsr draw_pit_bottom
 	ldx #sprite_falling_player_1
 	lda #3
 	ldb #0
@@ -1747,6 +1825,24 @@ skill_level_screen
 @c	jsr draw_selected_skill
 	bra @lp1
 @x	rts
+
+
+;used to draw the bottom of the pit
+;this used to be part of the tile map
+;but it was moved to make the pit clear
+;to shoot an arrow through
+draw_pit_bottom
+	lda #3
+	ldb #7
+	jsr set_draw_offset
+	ldx #sprite_pit_bottom
+	jsr draw_tile	
+	lda #4
+	ldb #7
+	jsr set_draw_offset
+	ldx #sprite_pit_bottom
+	jsr draw_tile	
+	rts
 
 draw_selected_skill
 	pshs d,x,y
