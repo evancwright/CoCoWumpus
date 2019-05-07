@@ -8,7 +8,7 @@ pit_tile_map
 	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,white_tile,white_tile,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
 	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,white_tile,white_tile,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
 	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,white_tile,white_tile,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
-	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_tile_white,sprite_tile_white,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
+	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,white_tile,white_tile,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
 	
 tunnel_tile_map
 	.dw sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall,sprite_pit_wall
