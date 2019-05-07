@@ -1,4 +1,4 @@
-;Hunt the Wumpus Cartridge for Coco 2/3 (and maybe 1)
+;Hunt the Wumpus Cartridge for Coco 2/3 (and maybe 1) 
 ;3/2/2019
 ;relocated video to 0x400
 ;relocated variables to 0x1C00
@@ -1399,8 +1399,57 @@ shoot_arrow
 	jsr reset_game
 @x	rts
 	
-;draws the arrow flying
+;figures out which animation to play and call the function to do it
 animate_arrow
+	lda move_dir
+	cmpa #LEFT
+	beq @l
+	cmpa #DOWN
+	beq @l
+	jsr animate_arrow_right
+	bra @x
+@l	jsr animate_arrow_left
+@x	rts
+
+;draws the arrow flying right to left
+animate_arrow_left 
+	pshs d,x,y
+	ldx #tunnel_tile_map
+	jsr draw_tile_map
+	lda #7
+	ldb #3
+	jsr set_draw_offset
+	ldx #sprite_arrow_left1
+	jsr draw_tile
+	jsr waste_time
+	jsr waste_time
+	jsr waste_time
+	ldx #sprite_arrow_left2
+	jsr draw_tile
+	jsr waste_time
+@lp
+	;overwrite old tile
+	ldx #white_tile
+	jsr draw_tile
+	;
+	deca
+	cmpa #0
+	beq @d
+	jsr set_draw_offset
+	ldx #sprite_arrow_left1
+	jsr draw_tile
+	jsr waste_time
+	jsr waste_time
+	jsr waste_time
+	ldx #sprite_arrow_left2
+	jsr draw_tile
+	bra @lp
+@d
+	puls d,x,y
+	rts
+		
+;draws the arrow flying right
+animate_arrow_right
 	pshs d,x,y
 	ldx #tunnel_tile_map
 	jsr draw_tile_map
